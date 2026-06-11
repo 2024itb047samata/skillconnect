@@ -2,12 +2,18 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
-import { Briefcase, MapPin, DollarSign, Calendar, FileText, Wrench, Zap, Paintbrush, Building2, Hammer, Car, Sparkles, Wind, AlertCircle, Loader2, CheckCircle } from 'lucide-react';
+import { Briefcase, MapPin, DollarSign, Calendar, FileText, Wrench, Zap, Paintbrush, Building2, Hammer, Car, Sparkles, Wind, Loader2, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const skills = [
-  { name: 'Plumber', icon: Wrench }, { name: 'Electrician', icon: Zap }, { name: 'Painter', icon: Paintbrush },
-  { name: 'Mason', icon: Building2 }, { name: 'Carpenter', icon: Hammer }, { name: 'Mechanic', icon: Car },
-  { name: 'Cleaner', icon: Sparkles }, { name: 'AC Technician', icon: Wind },
+  { name: 'Plumber', icon: Wrench, color: 'from-blue-500 to-cyan-400' },
+  { name: 'Electrician', icon: Zap, color: 'from-amber-500 to-yellow-400' },
+  { name: 'Painter', icon: Paintbrush, color: 'from-rose-500 to-pink-400' },
+  { name: 'Mason', icon: Building2, color: 'from-orange-500 to-red-400' },
+  { name: 'Carpenter', icon: Hammer, color: 'from-amber-600 to-orange-400' },
+  { name: 'Mechanic', icon: Car, color: 'from-slate-500 to-gray-400' },
+  { name: 'Cleaner', icon: Sparkles, color: 'from-emerald-500 to-teal-400' },
+  { name: 'AC Technician', icon: Wind, color: 'from-cyan-500 to-blue-400' },
 ];
 
 export default function PostJobPage() {
@@ -31,76 +37,199 @@ export default function PostJobPage() {
     if (!error) { setSuccess(true); setTimeout(() => navigate('/customer/jobs'), 1500); }
   };
 
-  if (success) return (<div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center transition-colors"><div className="text-center"><CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" /><h2 className="text-xl font-bold text-gray-900 dark:text-white">Job Posted!</h2></div></div>);
-
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8 transition-colors">
+    <div className="min-h-screen bg-surface-950 text-white py-8">
+      {/* Background Effects */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-hero-gradient opacity-20" />
+        <div className="absolute top-1/4 right-1/4 w-[300px] h-[300px] bg-primary-500/10 rounded-full blur-[100px]" />
+      </div>
+
+      <AnimatePresence>
+        {success && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-surface-950/80 backdrop-blur-sm z-50 flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              className="text-center"
+            >
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(52,211,153,0.4)]">
+                <CheckCircle className="w-10 h-10 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white">Job Posted!</h2>
+              <p className="text-surface-400 mt-2">Redirecting...</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <div className="max-w-3xl mx-auto px-4">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Post a New Job</h1>
-        <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <Briefcase className="w-5 h-5 text-primary-400" />
+            <span className="text-sm text-surface-400">Post a Job</span>
+          </div>
+          <h1 className="text-3xl font-bold mb-8">
+            Create a <span className="text-gradient">New Job</span>
+          </h1>
+        </motion.div>
+
+        <motion.form
+          onSubmit={handleSubmit}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="glass-card p-8 space-y-6"
+        >
+          {/* Service Type */}
           <div>
-            <label className="block text-sm font-medium text-gray-900 dark:text-white mb-3">Service Type *</label>
+            <label className="block text-sm font-medium text-white mb-4">Service Type *</label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
               {skills.map((s) => (
-                <button key={s.name} type="button" onClick={() => setFormData({ ...formData, skill: s.name })}
-                  className={`p-4 rounded-xl border-2 text-center transition-all ${formData.skill === s.name ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/30' : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600'}`}>
-                  <s.icon className={`w-6 h-6 mx-auto mb-2 ${formData.skill === s.name ? 'text-blue-600 dark:text-blue-400' : 'text-gray-400'}`} />
-                  <span className={`text-sm font-medium ${formData.skill === s.name ? 'text-blue-600 dark:text-blue-400' : 'text-gray-700 dark:text-gray-300'}`}>{s.name}</span>
-                </button>
+                <motion.button
+                  key={s.name}
+                  type="button"
+                  onClick={() => setFormData({ ...formData, skill: s.name })}
+                  className={`p-4 rounded-xl border-2 text-center transition-all ${
+                    formData.skill === s.name
+                      ? 'border-primary-500 bg-primary-500/10 shadow-glow'
+                      : 'border-surface-700 hover:border-surface-600'
+                  }`}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className={`w-10 h-10 mx-auto mb-2 rounded-lg bg-gradient-to-br ${s.color} flex items-center justify-center`}>
+                    <s.icon className={`w-5 h-5 text-white`} />
+                  </div>
+                  <span className={`text-sm font-medium ${formData.skill === s.name ? 'text-primary-400' : 'text-surface-300'}`}>
+                    {s.name}
+                  </span>
+                </motion.button>
               ))}
             </div>
           </div>
+
+          {/* Job Title */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Job Title *</label>
+            <label className="block text-sm font-medium text-surface-300 mb-2">Job Title *</label>
             <div className="relative">
-              <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input type="text" value={formData.title} onChange={(e) => setFormData({ ...formData, title: e.target.value })} placeholder="e.g., Fix kitchen sink leak" className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white dark:placeholder-gray-400" />
+              <Briefcase className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-500" />
+              <input
+                type="text"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                placeholder="e.g., Fix kitchen sink leak"
+                className="input-premium pl-12"
+              />
             </div>
           </div>
+
+          {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description *</label>
+            <label className="block text-sm font-medium text-surface-300 mb-2">Description *</label>
             <div className="relative">
-              <FileText className="absolute left-4 top-3 w-5 h-5 text-gray-400" />
-              <textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} rows={4} placeholder="Describe the work..." className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none resize-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white dark:placeholder-gray-400" />
+              <FileText className="absolute left-4 top-3 w-5 h-5 text-surface-500" />
+              <textarea
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                rows={4}
+                placeholder="Describe the work..."
+                className="input-premium pl-12 resize-none"
+              />
             </div>
           </div>
+
+          {/* Location */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Location *</label>
+            <label className="block text-sm font-medium text-surface-300 mb-2">Location *</label>
             <div className="relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input type="text" value={formData.location} onChange={(e) => setFormData({ ...formData, location: e.target.value })} placeholder="e.g., Downtown, New York" className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white dark:placeholder-gray-400" />
+              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-500" />
+              <input
+                type="text"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                placeholder="e.g., Downtown, New York"
+                className="input-premium pl-12"
+              />
             </div>
           </div>
+
+          {/* Budget */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Min Budget</label>
+              <label className="block text-sm font-medium text-surface-300 mb-2">Min Budget</label>
               <div className="relative">
-                <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input type="number" value={formData.budget_min} onChange={(e) => setFormData({ ...formData, budget_min: e.target.value })} className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
+                <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-500" />
+                <input
+                  type="number"
+                  value={formData.budget_min}
+                  onChange={(e) => setFormData({ ...formData, budget_min: e.target.value })}
+                  className="input-premium pl-12"
+                />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Max Budget</label>
+              <label className="block text-sm font-medium text-surface-300 mb-2">Max Budget</label>
               <div className="relative">
-                <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                <input type="number" value={formData.budget_max} onChange={(e) => setFormData({ ...formData, budget_max: e.target.value })} className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
+                <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-500" />
+                <input
+                  type="number"
+                  value={formData.budget_max}
+                  onChange={(e) => setFormData({ ...formData, budget_max: e.target.value })}
+                  className="input-premium pl-12"
+                />
               </div>
             </div>
           </div>
+
+          {/* Preferred Date */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Preferred Date</label>
+            <label className="block text-sm font-medium text-surface-300 mb-2">Preferred Date</label>
             <div className="relative">
-              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <input type="date" value={formData.preferred_date} onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })} className="w-full pl-12 pr-4 py-3 border border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none bg-white dark:bg-gray-900 text-gray-900 dark:text-white" />
+              <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-500" />
+              <input
+                type="date"
+                value={formData.preferred_date}
+                onChange={(e) => setFormData({ ...formData, preferred_date: e.target.value })}
+                className="input-premium pl-12"
+              />
             </div>
           </div>
-          <div className="flex justify-between">
-            <Link to="/customer/dashboard" className="px-6 py-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Cancel</Link>
-            <button type="submit" disabled={loading} className="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold rounded-xl hover:shadow-lg disabled:opacity-50 transition-all flex items-center gap-2">
-              {loading ? <><Loader2 className="w-5 h-5 animate-spin" /> Posting...</> : 'Post Job'}
-            </button>
+
+          {/* Actions */}
+          <div className="flex justify-between pt-4">
+            <Link
+              to="/customer/dashboard"
+              className="px-6 py-3 text-surface-400 hover:text-white transition-colors"
+            >
+              Cancel
+            </Link>
+            <motion.button
+              type="submit"
+              disabled={loading}
+              className="premium-button px-8 py-3 flex items-center gap-2"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  Posting...
+                </>
+              ) : (
+                'Post Job'
+              )}
+            </motion.button>
           </div>
-        </form>
+        </motion.form>
       </div>
     </div>
   );
