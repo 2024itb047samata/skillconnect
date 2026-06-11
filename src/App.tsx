@@ -13,11 +13,14 @@ import CustomerBookingsPage from './pages/customer/BookingsPage';
 import WorkerDashboard from './pages/worker/Dashboard';
 import WorkerProfileEdit from './pages/worker/ProfileEdit';
 import AdminDashboard from './pages/admin/Dashboard';
+import SOSPage from './pages/worker/SOSPage';
+import EmergencyPage from './pages/EmergencyPage';
+import ContractorDashboard from './pages/contractor/Dashboard';
 
 function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode; allowedRoles?: string[] }) {
   const { user, profile, loading } = useAuth();
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-surface-950">
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0a14]">
       <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin" />
     </div>
   );
@@ -29,18 +32,19 @@ function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode;
 function App() {
   const { user, profile, loading } = useAuth();
   if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-surface-950">
+    <div className="min-h-screen flex items-center justify-center bg-[#0a0a14]">
       <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin" />
     </div>
   );
   return (
-    <div className="min-h-screen bg-surface-950 transition-colors duration-300">
+    <div className="min-h-screen bg-[#0a0a14] transition-colors duration-300">
       <Navbar />
       <main>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={user ? <Navigate to={`/${profile?.role || 'customer'}/dashboard`} replace /> : <LoginPage />} />
           <Route path="/signup" element={user ? <Navigate to={`/${profile?.role || 'customer'}/dashboard`} replace /> : <SignupPage />} />
+          <Route path="/emergency" element={<EmergencyPage />} />
           <Route path="/search" element={<ProtectedRoute><SearchWorkersPage /></ProtectedRoute>} />
           <Route path="/worker/:workerId" element={<ProtectedRoute><WorkerProfilePage /></ProtectedRoute>} />
           <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
@@ -55,6 +59,9 @@ function App() {
           <Route path="/worker/bookings" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><CustomerBookingsPage /></ProtectedRoute>} />
           <Route path="/worker/jobs" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><WorkerDashboard /></ProtectedRoute>} />
           <Route path="/worker/reviews" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><WorkerDashboard /></ProtectedRoute>} />
+          <Route path="/worker/sos" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><SOSPage /></ProtectedRoute>} />
+          <Route path="/contractor/dashboard" element={<ProtectedRoute allowedRoles={['contractor', 'admin']}><ContractorDashboard /></ProtectedRoute>} />
+          <Route path="/contractor/team" element={<ProtectedRoute allowedRoles={['contractor', 'admin']}><ContractorDashboard /></ProtectedRoute>} />
           <Route path="/admin/dashboard" element={<ProtectedRoute allowedRoles={['admin']}><AdminDashboard /></ProtectedRoute>} />
           <Route path="*" element={user ? <Navigate to={`/${profile?.role || 'customer'}/dashboard`} replace /> : <Navigate to="/" replace />} />
         </Routes>

@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { Menu, X, User, LogOut, Briefcase, MessageSquare, Sun, Moon, Zap } from 'lucide-react';
+import { Menu, X, User, LogOut, MessageSquare, Sun, Moon, Zap, ChevronLeft, AlertTriangle, UserCog } from 'lucide-react';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -12,75 +12,96 @@ export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleSignOut = async () => { await signOut(); navigate('/'); };
+  const handleSignOut = async () => {
+    await signOut();
+    navigate('/');
+  };
+
+  const showBackButton = location.pathname !== '/' && location.pathname !== '/login' && location.pathname !== '/signup';
 
   return (
-    <nav className="glass sticky top-0 z-50 transition-all duration-300">
+    <nav className="sticky top-0 z-50 bg-[#0a0a14]/95 backdrop-blur-md border-b border-white/10 transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex items-center">
+          <div className="flex items-center gap-4">
+            {showBackButton && (
+              <motion.button
+                onClick={() => navigate(-1)}
+                className="p-2 rounded-xl text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+                whileHover={{ x: -2 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </motion.button>
+            )}
+
             <Link to="/" className="flex items-center space-x-3 group">
               <motion.div
                 className="relative w-10 h-10 rounded-xl flex items-center justify-center overflow-hidden"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary-500 via-accent-500 to-primary-600 animate-gradient-shift bg-[length:200%_200%]" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-500 to-accent-500" />
                 <Zap className="w-5 h-5 text-white relative z-10" />
-                <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
               </motion.div>
-              <span className="text-xl font-bold text-gradient">SkillConnect</span>
+              <span className="text-xl font-bold text-white">SkillConnect</span>
             </Link>
           </div>
+
           <div className="hidden md:flex items-center space-x-2">
             <motion.button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl glass-button group"
+              className="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <motion.div
-                initial={false}
-                animate={{ rotate: theme === 'dark' ? 180 : 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                {theme === 'light' ? (
-                  <Moon className="w-5 h-5 text-surface-600 dark:text-surface-300" />
-                ) : (
-                  <Sun className="w-5 h-5 text-amber-400" />
-                )}
-              </motion.div>
+              {theme === 'light' ? (
+                <Moon className="w-5 h-5 text-white" />
+              ) : (
+                <Sun className="w-5 h-5 text-amber-400" />
+              )}
             </motion.button>
+
             {user ? (
               <>
                 <Link
                   to={`/${profile?.role}/dashboard`}
-                  className="text-surface-600 dark:text-surface-300 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-xl transition-all duration-300 hover:bg-white/5 dark:hover:bg-white/5"
+                  className="text-gray-300 hover:text-white px-4 py-2 rounded-xl transition-all duration-300 hover:bg-white/5 font-medium"
                 >
                   Dashboard
                 </Link>
+
+                {profile?.role === 'worker' && (
+                  <Link
+                    to="/worker/sos"
+                    className="relative p-2.5 rounded-xl text-gray-300 hover:text-red-400 transition-all hover:bg-red-500/10"
+                    title="SOS / Safety"
+                  >
+                    <AlertTriangle className="w-5 h-5" />
+                  </Link>
+                )}
+
                 <Link
                   to="/chat"
-                  className="relative p-2.5 rounded-xl text-surface-600 dark:text-surface-300 hover:text-primary-600 dark:hover:text-primary-400 transition-all duration-300 hover:bg-white/5 dark:hover:bg-white/5"
+                  className="relative p-2.5 rounded-xl text-gray-300 hover:text-white transition-all duration-300 hover:bg-white/5"
                 >
                   <MessageSquare className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-accent-500 rounded-full animate-pulse" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-primary-500 rounded-full" />
                 </Link>
+
                 <Link
                   to={`/${profile?.role}/profile`}
-                  className="flex items-center space-x-3 px-3 py-1.5 rounded-xl hover:bg-white/5 dark:hover:bg-white/5 transition-all duration-300 group"
+                  className="flex items-center space-x-3 px-3 py-1.5 rounded-xl hover:bg-white/5 transition-all duration-300 group"
                 >
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-primary-500/30 group-hover:ring-primary-500/60 transition-all">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary-400 to-accent-500" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <User className="w-4 h-4 text-white" />
-                    </div>
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-primary-500/30 group-hover:ring-primary-500/60 transition-all bg-gradient-to-br from-primary-400 to-accent-500 flex items-center justify-center">
+                    <User className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-surface-700 dark:text-surface-300 font-medium">{profile?.full_name?.split(' ')[0]}</span>
+                  <span className="text-white font-medium">{profile?.full_name?.split(' ')[0]}</span>
                 </Link>
+
                 <motion.button
                   onClick={handleSignOut}
-                  className="flex items-center space-x-2 text-surface-500 dark:text-surface-400 hover:text-rose-500 dark:hover:text-rose-400 px-4 py-2 rounded-xl transition-all duration-300 hover:bg-rose-500/10"
+                  className="flex items-center space-x-2 text-gray-400 hover:text-rose-400 px-4 py-2 rounded-xl transition-all duration-300 hover:bg-rose-500/10"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
@@ -90,16 +111,19 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link
-                  to="/login"
-                  className="px-5 py-2.5 text-surface-600 dark:text-surface-300 hover:text-primary-600 dark:hover:text-primary-400 font-medium rounded-xl transition-all duration-300 hover:bg-white/5"
-                >
-                  Login
-                </Link>
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <Link
+                    to="/login"
+                    className="px-5 py-2.5 bg-white text-primary-600 font-bold rounded-xl hover:bg-gray-100 transition-all shadow-lg"
+                  >
+                    Login
+                  </Link>
+                </motion.div>
+
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <Link
                     to="/signup"
-                    className="premium-button px-6 py-2.5"
+                    className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-accent-500 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/20 hover:shadow-xl transition-all"
                   >
                     Get Started
                   </Link>
@@ -107,28 +131,40 @@ export default function Navbar() {
               </>
             )}
           </div>
+
           <div className="md:hidden flex items-center gap-2">
             <motion.button
               onClick={toggleTheme}
-              className="p-2.5 rounded-xl glass-button"
+              className="p-2.5 rounded-xl bg-white/5 border border-white/10"
               whileTap={{ scale: 0.95 }}
             >
               {theme === 'light' ? (
-                <Moon className="w-5 h-5 text-surface-600" />
+                <Moon className="w-5 h-5 text-white" />
               ) : (
                 <Sun className="w-5 h-5 text-amber-400" />
               )}
             </motion.button>
+
+            {!user && (
+              <Link
+                to="/login"
+                className="px-4 py-2 bg-white text-primary-600 font-bold rounded-xl"
+              >
+                Login
+              </Link>
+            )}
+
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2.5 rounded-xl glass-button"
+              className="p-2.5 rounded-xl bg-white/5 border border-white/10"
               whileTap={{ scale: 0.95 }}
             >
-              {isMenuOpen ? <X className="w-6 h-6 text-surface-600 dark:text-surface-300" /> : <Menu className="w-6 h-6 text-surface-600 dark:text-surface-300" />}
+              {isMenuOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
             </motion.button>
           </div>
         </div>
       </div>
+
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -136,28 +172,41 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden glass border-t border-white/10 dark:border-surface-800/50 overflow-hidden"
+            className="md:hidden bg-[#0a0a14] border-t border-white/10 overflow-hidden"
           >
             <div className="px-4 py-4 space-y-2">
               {user ? (
                 <>
                   <Link
                     to={`/${profile?.role}/dashboard`}
-                    className="block px-4 py-3 text-surface-600 dark:text-surface-300 rounded-xl hover:bg-white/5 transition-colors"
+                    className="block px-4 py-3 text-white rounded-xl hover:bg-white/5 transition-colors font-medium"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Dashboard
                   </Link>
+
+                  {profile?.role === 'worker' && (
+                    <Link
+                      to="/worker/sos"
+                      className="block px-4 py-3 text-red-400 rounded-xl hover:bg-red-500/10 transition-colors font-medium"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <AlertTriangle className="w-4 h-4 inline mr-2" />
+                      SOS / Safety
+                    </Link>
+                  )}
+
                   <Link
                     to="/chat"
-                    className="block px-4 py-3 text-surface-600 dark:text-surface-300 rounded-xl hover:bg-white/5 transition-colors"
+                    className="block px-4 py-3 text-white rounded-xl hover:bg-white/5 transition-colors font-medium"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Messages
                   </Link>
+
                   <button
                     onClick={() => { handleSignOut(); setIsMenuOpen(false); }}
-                    className="w-full text-left px-4 py-3 text-rose-500 rounded-xl hover:bg-rose-500/10 transition-colors"
+                    className="w-full text-left px-4 py-3 text-rose-400 rounded-xl hover:bg-rose-500/10 transition-colors font-medium"
                   >
                     Logout
                   </button>
@@ -166,14 +215,14 @@ export default function Navbar() {
                 <>
                   <Link
                     to="/login"
-                    className="block px-4 py-3 text-surface-600 dark:text-surface-300 rounded-xl hover:bg-white/5 transition-colors"
+                    className="block px-4 py-3 text-white rounded-xl hover:bg-white/5 transition-colors font-medium"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Login
                   </Link>
                   <Link
                     to="/signup"
-                    className="block px-4 py-3 bg-gradient-to-r from-primary-500 to-accent-500 text-white rounded-xl text-center font-medium"
+                    className="block px-4 py-3 bg-gradient-to-r from-primary-600 to-accent-500 text-white rounded-xl text-center font-semibold"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sign Up
