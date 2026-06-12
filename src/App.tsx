@@ -31,11 +31,6 @@ function ProtectedRoute({ children, allowedRoles }: { children: React.ReactNode;
 
 function App() {
   const { user, profile, loading } = useAuth();
-  if (loading) return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0a0a14]">
-      <div className="w-12 h-12 border-4 border-primary-500 border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
   return (
     <div className="min-h-screen bg-[#0a0a14] transition-colors duration-300">
       <Navbar />

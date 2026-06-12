@@ -15,20 +15,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let mounted = true;
+    const timeoutId = setTimeout(() => { if (mounted) setLoading(false); }, 3000);
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (mounted) { setSession(session); setUser(session?.user ?? null); if (session?.user) await fetchProfile(session.user.id); setLoading(false); }
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (mounted) { setSession(session); setUser(session?.user ?? null); if (session?.user) await fetchProfile(session.user.id); }
+      } catch (e) { console.error('Session fetch error:', e); }
+      finally { clearTimeout(timeoutId); if (mounted) setLoading(false); }
     };
     getSession();
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      if (mounted) { setSession(session); setUser(session?.user ?? null); if (session?.user) await fetchProfile(session.user.id); else { setProfile(null); setWorkerDetails(null); } setLoading(false); }
+      if (mounted) { setSession(session); setUser(session?.user ?? null); if (session?.user) await fetchProfile(session.user.id); else { setProfile(null); setWorkerDetails(null); } }
     });
-    return () => { mounted = false; subscription.unsubscribe(); };
+    return () => { mounted = false; subscription.unsubscribe(); clearTimeout(timeoutId); };
   }, []);
 
   const fetchProfile = async (userId: string) => {
-    const { data: profileData } = await supabase.from('profiles').select('*').eq('id', userId).single();
-    if (profileData) { setProfile(profileData); if (profileData.role === 'worker') { const { data: workerData } = await supabase.from('worker_details').select('*').eq('user_id', userId).single(); if (workerData) setWorkerDetails(workerData); } }
+    try {
+      const { data: profileData } = await supabase.from('profiles').select('*').eq('id', userId).single();
+      if (profileData) { setProfile(profileData); if (profileData.role === 'worker') { const { data: workerData } = await supabase.from('worker_details').select('*').eq('user_id', userId).single(); if (workerData) setWorkerDetails(workerData); } }
+    } catch (e) { console.error('Profile fetch error:', e); }
   };
 
   const signIn = async (email: string, password: string) => { const { error } = await supabase.auth.signInWithPassword({ email, password }); return { error: error as Error | null }; };
