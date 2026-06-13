@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import {
   Wrench, Zap, Paintbrush, Building2, Hammer, Car, Sparkles, Wind, Star, ArrowRight,
   CheckCircle, Search, Shield, Clock, Users, ShieldCheck, BadgeCheck, AlertTriangle,
-  MapPin, TrendingUp, Awards, Briefcase, UserCheck, Phone, Heart, ChevronRight,
-  Brain, Target, Globe2, MessageCircle, BarChart3, Wallet, GraduationCap, UserCog
+  MapPin, Briefcase, UserCheck, Heart, ChevronRight,
+  Brain, Target, Wallet, GraduationCap, UserCog
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -53,12 +53,12 @@ const itemVariants = {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0a0a14] text-white">
-      {/* Background */}
+    <div className="min-h-screen bg-white dark:bg-[#0a0a14] text-gray-900 dark:text-white transition-colors duration-300">
+      {/* Background - Light: subtle gradient, Dark: deep glow */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a14] via-[#12122a] to-[#0a0a14]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(59,130,246,0.15)_0%,transparent_50%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(59,130,246,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.02)_1px,transparent_1px)] bg-[size:80px_80px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-gray-100 to-gray-50 dark:from-[#0a0a14] dark:via-[#12122a] dark:to-[#0a0a14] transition-colors" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.08)_0%,transparent_50%)] dark:bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.15)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(168,85,247,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.03)_1px,transparent_1px)] bg-[size:80px_80px] dark:bg-[linear-gradient(rgba(59,130,246,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(59,130,246,0.02)_1px,transparent_1px)]" />
       </div>
 
       {/* Hero Section */}
@@ -73,13 +73,13 @@ export default function LandingPage() {
             {/* Trust Badge */}
             <motion.div
               variants={itemVariants}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-600/20 border border-primary-500/30 mb-6"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 dark:bg-primary-600/20 border border-primary-200 dark:border-primary-500/30 mb-6"
             >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-500"></span>
               </span>
-              <span className="text-sm font-medium text-white">AI-Powered Workforce Empowerment Platform</span>
+              <span className="text-sm font-medium text-primary-700 dark:text-white">AI-Powered Workforce Empowerment Platform</span>
             </motion.div>
 
             {/* Main Headline */}
@@ -87,18 +87,18 @@ export default function LandingPage() {
               variants={itemVariants}
               className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight tracking-tight"
             >
-              <span className="text-white">Build Trust.</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-400 via-accent-400 to-primary-400 mt-1">
+              <span className="text-gray-900 dark:text-white">Build Trust.</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500 dark:from-primary-400 dark:via-accent-400 dark:to-primary-400 mt-1">
                 Empower Careers.
               </span>
-              <span className="block text-white text-2xl sm:text-3xl md:text-4xl mt-3 font-semibold">
+              <span className="block text-gray-700 dark:text-white text-2xl sm:text-3xl md:text-4xl mt-3 font-semibold">
                 Transform Lives.
               </span>
             </motion.h1>
 
             <motion.p
               variants={itemVariants}
-              className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed"
+              className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8 leading-relaxed"
             >
               Not just a marketplace — an AI-powered ecosystem helping workers build trust,
               gain financial identity, develop skills, and access better opportunities.
@@ -121,7 +121,7 @@ export default function LandingPage() {
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                 <Link
                   to="/signup?role=worker"
-                  className="px-8 py-4 bg-white/10 border-2 border-accent-500/50 text-white text-lg font-bold rounded-xl inline-flex items-center gap-2 hover:bg-accent-500/20 transition-all"
+                  className="px-8 py-4 bg-white dark:bg-white/10 border-2 border-primary-300 dark:border-accent-500/50 text-primary-700 dark:text-white text-lg font-bold rounded-xl inline-flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-accent-500/20 shadow-sm dark:shadow-none transition-all"
                 >
                   <Briefcase className="w-5 h-5" />
                   Join as Worker
@@ -130,7 +130,7 @@ export default function LandingPage() {
               <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                 <Link
                   to="/signup?role=contractor"
-                  className="px-8 py-4 bg-white/10 border-2 border-primary-500/50 text-white text-lg font-bold rounded-xl inline-flex items-center gap-2 hover:bg-primary-500/20 transition-all"
+                  className="px-8 py-4 bg-white dark:bg-white/10 border-2 border-primary-400 dark:border-primary-500/50 text-primary-700 dark:text-white text-lg font-bold rounded-xl inline-flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-primary-500/20 shadow-sm dark:shadow-none transition-all"
                 >
                   <UserCog className="w-5 h-5" />
                   Contractor Mode
@@ -166,12 +166,12 @@ export default function LandingPage() {
                   transition={{ delay: 0.5 + i * 0.05 }}
                 >
                   <Link to="/search" className="group block">
-                    <div className="relative overflow-hidden rounded-2xl p-4 lg:p-5 transition-all duration-300 group-hover:scale-105 group-hover:shadow-2xl bg-[#12122a] border border-white/10 hover:border-primary-500/50">
+                    <div className="relative overflow-hidden rounded-2xl p-4 lg:p-5 transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl bg-white dark:bg-[#12122a] border border-gray-200 dark:border-white/10 hover:border-primary-300 dark:hover:border-primary-500/50 shadow-sm dark:shadow-none">
                       <div className={`w-14 h-14 lg:w-16 lg:h-16 mb-3 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center transition-transform group-hover:scale-110`}>
                         <s.icon className="w-7 h-7 lg:w-8 lg:h-8 text-white" />
                       </div>
-                      <h3 className="text-base lg:text-lg font-bold text-white mb-1">{s.name}</h3>
-                      <p className="text-xs lg:text-sm text-gray-400">{s.desc}</p>
+                      <h3 className="text-base lg:text-lg font-bold text-gray-900 dark:text-white mb-1">{s.name}</h3>
+                      <p className="text-xs lg:text-sm text-gray-500 dark:text-gray-400">{s.desc}</p>
                     </div>
                   </Link>
                 </motion.div>
@@ -192,13 +192,13 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-[#12122a] border border-white/10 rounded-xl p-4 text-center"
+                className="bg-white dark:bg-[#12122a] border border-gray-200 dark:border-white/10 rounded-xl p-4 text-center shadow-sm dark:shadow-none"
               >
                 <div className={`w-10 h-10 mx-auto mb-2 rounded-lg bg-gradient-to-br ${s.color} flex items-center justify-center`}>
                   <s.icon className="w-5 h-5 text-white" />
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-white">{s.value}</div>
-                <div className="text-sm text-gray-400">{s.label}</div>
+                <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">{s.value}</div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">{s.label}</div>
               </motion.div>
             ))}
           </div>
@@ -214,14 +214,14 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-trust-500/20 border border-trust-500/30 mb-4">
-              <BadgeCheck className="w-4 h-4 text-trust-400" />
-              <span className="text-sm font-medium text-trust-300">AI-Powered Verification</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-trust-100 dark:bg-trust-500/20 border border-trust-200 dark:border-trust-500/30 mb-4">
+              <BadgeCheck className="w-4 h-4 text-trust-600 dark:text-trust-400" />
+              <span className="text-sm font-medium text-trust-700 dark:text-trust-300">AI-Powered Verification</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-              SkillTrust <span className="text-transparent bg-clip-text bg-gradient-to-r from-trust-400 to-primary-400">Score</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3">
+              SkillTrust <span className="text-transparent bg-clip-text bg-gradient-to-r from-trust-500 to-primary-500">Score</span>
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
               Upload work photos and videos. AI analyzes quality, finishing, and complexity to generate your verified skill score.
             </p>
           </motion.div>
@@ -232,7 +232,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-[#12122a] border border-white/10 rounded-2xl p-8"
+              className="bg-white dark:bg-[#12122a] border border-gray-200 dark:border-white/10 rounded-2xl p-8 shadow-sm dark:shadow-none"
             >
               <div className="flex items-center gap-6 mb-6">
                 <div className="relative w-24 h-24">
@@ -243,20 +243,20 @@ export default function LandingPage() {
                     <defs>
                       <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
                         <stop offset="0%" stopColor="#10b981" />
-                        <stop offset="100%" stopColor="#3b82f6" />
+                        <stop offset="100%" stopColor="#a855f7" />
                       </linearGradient>
                     </defs>
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-3xl font-bold text-white">87</span>
+                    <span className="text-3xl font-bold text-gray-900 dark:text-white">87</span>
                   </div>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <BadgeCheck className="w-5 h-5 text-trust-400" />
-                    <span className="font-bold text-white">AI Verified Electrician</span>
+                    <BadgeCheck className="w-5 h-5 text-trust-500 dark:text-trust-400" />
+                    <span className="font-bold text-gray-900 dark:text-white">AI Verified Electrician</span>
                   </div>
-                  <p className="text-sm text-gray-400">Confidence: 94%</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Confidence: 94%</p>
                   <div className="flex items-center gap-1 mt-2">
                     {[1, 2, 3, 4, 5].map((s) => (
                       <Star key={s} className="w-4 h-4 text-amber-400 fill-amber-400" />
@@ -267,23 +267,23 @@ export default function LandingPage() {
 
               <div className="space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Work Quality</span>
-                  <span className="text-white font-medium">92/100</span>
+                  <span className="text-gray-500 dark:text-gray-400">Work Quality</span>
+                  <span className="text-gray-900 dark:text-white font-medium">92/100</span>
                 </div>
-                <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-2 bg-gray-200 dark:bg-white/10 rounded-full overflow-hidden">
                   <div className="h-full w-[92%] bg-gradient-to-r from-trust-500 to-primary-500 rounded-full" />
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Customer Ratings</span>
-                  <span className="text-white font-medium">4.8/5.0</span>
+                  <span className="text-gray-500 dark:text-gray-400">Customer Ratings</span>
+                  <span className="text-gray-900 dark:text-white font-medium">4.8/5.0</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Job Completion Rate</span>
-                  <span className="text-white font-medium">98%</span>
+                  <span className="text-gray-500 dark:text-gray-400">Job Completion Rate</span>
+                  <span className="text-gray-900 dark:text-white font-medium">98%</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Response Time</span>
-                  <span className="text-white font-medium">~15 min</span>
+                  <span className="text-gray-500 dark:text-gray-400">Response Time</span>
+                  <span className="text-gray-900 dark:text-white font-medium">~15 min</span>
                 </div>
               </div>
             </motion.div>
@@ -302,12 +302,12 @@ export default function LandingPage() {
                 { label: 'Response Time', value: 10, desc: 'Speed of engagement' },
                 { label: 'Repeat Customers', value: 10, desc: 'Customer loyalty metric' },
               ].map((item, i) => (
-                <div key={i} className="bg-[#12122a] border border-white/10 rounded-xl p-4">
+                <div key={i} className="bg-white dark:bg-[#12122a] border border-gray-200 dark:border-white/10 rounded-xl p-4 shadow-sm dark:shadow-none">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-white font-medium">{item.label}</span>
-                    <span className="text-trust-400 font-bold">{item.value}%</span>
+                    <span className="text-gray-900 dark:text-white font-medium">{item.label}</span>
+                    <span className="text-trust-600 dark:text-trust-400 font-bold">{item.value}%</span>
                   </div>
-                  <p className="text-xs text-gray-500">{item.desc}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-500">{item.desc}</p>
                 </div>
               ))}
             </motion.div>
@@ -316,7 +316,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works */}
-      <section className="relative py-16">
+      <section className="relative py-16 bg-gray-50 dark:bg-transparent">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -324,10 +324,10 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-              How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-accent-400">Works</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3">
+              How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-accent-500">Works</span>
             </h2>
-            <p className="text-gray-400 text-lg">Four simple steps to get your job done</p>
+            <p className="text-gray-600 dark:text-gray-400 text-lg">Four simple steps to get your job done</p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -346,8 +346,8 @@ export default function LandingPage() {
                 <div className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-primary-500 text-white text-sm font-bold mb-3">
                   {item.step}
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{item.title}</h3>
-                <p className="text-gray-400 text-sm">{item.desc}</p>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{item.title}</h3>
+                <p className="text-gray-500 dark:text-gray-400 text-sm">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -355,7 +355,7 @@ export default function LandingPage() {
       </section>
 
       {/* Core Features */}
-      <section className="relative py-16 bg-gradient-to-b from-transparent via-primary-950/10 to-transparent">
+      <section className="relative py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -363,10 +363,10 @@ export default function LandingPage() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3">
-              Empowerment <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-primary-400">Features</span>
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-3">
+              Empowerment <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-500 to-primary-500">Features</span>
             </h2>
-            <p className="text-gray-400 text-lg">More than a marketplace — a complete ecosystem</p>
+            <p className="text-gray-600 dark:text-gray-400 text-lg">More than a marketplace — a complete ecosystem</p>
           </motion.div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -377,13 +377,13 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="bg-[#12122a] border border-white/10 rounded-2xl p-6 hover:border-primary-500/50 transition-all"
+                className="bg-white dark:bg-[#12122a] border border-gray-200 dark:border-white/10 rounded-2xl p-6 hover:border-primary-300 dark:hover:border-primary-500/50 transition-all shadow-sm dark:shadow-none"
               >
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center mb-4">
                   <f.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{f.title}</h3>
-                <p className="text-gray-400 text-sm">{f.desc}</p>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">{f.title}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">{f.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -397,18 +397,18 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-empower-900/30 to-primary-900/30 border border-empower-500/30 rounded-2xl p-8"
+            className="bg-gradient-to-r from-empower-100 to-primary-100 dark:from-empower-900/30 dark:to-primary-900/30 border border-empower-200 dark:border-empower-500/30 rounded-2xl p-8"
           >
             <div className="flex flex-col lg:flex-row items-center gap-8">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-4">
-                  <Heart className="w-5 h-5 text-empower-400" />
-                  <span className="text-sm font-medium text-empower-300">Women Workforce Empowerment</span>
+                  <Heart className="w-5 h-5 text-empower-500 dark:text-empower-400" />
+                  <span className="text-sm font-medium text-empower-700 dark:text-empower-300">Women Workforce Empowerment</span>
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-4">
-                  Professional Women, <span className="text-empower-400">Verified & Trusted</span>
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+                  Professional Women, <span className="text-empower-600 dark:text-empower-400">Verified & Trusted</span>
                 </h2>
-                <p className="text-gray-300 mb-6">
+                <p className="text-gray-700 dark:text-gray-300 mb-6">
                   Dedicated category for women professionals with verified profiles,
                   safety-focused matching, and women-led service categories.
                   Promoting equal employment opportunities.
@@ -423,11 +423,11 @@ export default function LandingPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 {['Cleaner', 'Cook', 'Beautician', 'Tailor'].map((skill, i) => (
-                  <div key={i} className="bg-[#12122a] border border-white/10 rounded-xl p-4 text-center">
-                    <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-empower-500/20 flex items-center justify-center">
-                      <UserCheck className="w-5 h-5 text-empower-400" />
+                  <div key={i} className="bg-white dark:bg-[#12122a] border border-gray-200 dark:border-white/10 rounded-xl p-4 text-center shadow-sm dark:shadow-none">
+                    <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-empower-100 dark:bg-empower-500/20 flex items-center justify-center">
+                      <UserCheck className="w-5 h-5 text-empower-500 dark:text-empower-400" />
                     </div>
-                    <span className="text-sm font-medium text-white">{skill}</span>
+                    <span className="text-sm font-medium text-gray-900 dark:text-white">{skill}</span>
                   </div>
                 ))}
               </div>
@@ -443,24 +443,24 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-[#12122a] border border-white/10 rounded-2xl p-8"
+            className="bg-white dark:bg-[#12122a] border border-gray-200 dark:border-white/10 rounded-2xl p-8 shadow-sm dark:shadow-none"
           >
             <div className="flex flex-col lg:flex-row items-center gap-8">
               <div className="flex-1">
                 <div className="flex items-center gap-2 mb-4">
-                  <UserCog className="w-5 h-5 text-primary-400" />
-                  <span className="text-sm font-medium text-primary-300">For Contractors & Builders</span>
+                  <UserCog className="w-5 h-5 text-primary-500 dark:text-primary-400" />
+                  <span className="text-sm font-medium text-primary-700 dark:text-primary-300">For Contractors & Builders</span>
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-4">Contractor Mode</h2>
-                <p className="text-gray-400 mb-6">
+                <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">Contractor Mode</h2>
+                <p className="text-gray-600 dark:text-gray-400 mb-6">
                   Manage your workforce, track site attendance through geofencing,
                   monitor progress, and handle payments — all in one place.
                 </p>
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {['Team Management', 'Site Attendance', 'Wage Tracking', 'Progress Reports'].map((f, i) => (
                     <div key={i} className="flex items-center gap-2 text-sm">
-                      <CheckCircle className="w-4 h-4 text-trust-400" />
-                      <span className="text-gray-300">{f}</span>
+                      <CheckCircle className="w-4 h-4 text-trust-500 dark:text-trust-400" />
+                      <span className="text-gray-700 dark:text-gray-300">{f}</span>
                     </div>
                   ))}
                 </div>
@@ -473,22 +473,22 @@ export default function LandingPage() {
                 </Link>
               </div>
               <div className="w-full lg:w-80">
-                <div className="bg-[#0a0a14] rounded-xl p-4 space-y-3">
-                  <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-primary-500/20 flex items-center justify-center text-xs font-bold text-primary-400">A</div>
+                <div className="bg-gray-100 dark:bg-[#0a0a14] rounded-xl p-4 space-y-3">
+                  <div className="flex items-center gap-3 p-3 bg-white dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10">
+                    <div className="w-8 h-8 rounded-full bg-primary-100 dark:bg-primary-500/20 flex items-center justify-center text-xs font-bold text-primary-600 dark:text-primary-400">A</div>
                     <div className="flex-1">
-                      <span className="text-sm text-white">Worker Attendance</span>
-                      <p className="text-xs text-trust-400">Auto check-in via geofencing</p>
+                      <span className="text-sm text-gray-900 dark:text-white">Worker Attendance</span>
+                      <p className="text-xs text-trust-600 dark:text-trust-400">Auto check-in via geofencing</p>
                     </div>
-                    <span className="text-xs px-2 py-1 bg-trust-500/20 text-trust-400 rounded">Active</span>
+                    <span className="text-xs px-2 py-1 bg-trust-100 dark:bg-trust-500/20 text-trust-700 dark:text-trust-400 rounded">Active</span>
                   </div>
-                  <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
-                    <div className="w-8 h-8 rounded-full bg-accent-500/20 flex items-center justify-center text-xs font-bold text-accent-400">W</div>
+                  <div className="flex items-center gap-3 p-3 bg-white dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10">
+                    <div className="w-8 h-8 rounded-full bg-accent-100 dark:bg-accent-500/20 flex items-center justify-center text-xs font-bold text-accent-600 dark:text-accent-400">W</div>
                     <div className="flex-1">
-                      <span className="text-sm text-white">Wage Summary</span>
+                      <span className="text-sm text-gray-900 dark:text-white">Wage Summary</span>
                       <p className="text-xs text-gray-500">Today: ₹12,500 pending</p>
                     </div>
-                    <span className="text-xs text-gray-400">View</span>
+                    <span className="text-xs text-gray-500">View</span>
                   </div>
                 </div>
               </div>
@@ -498,9 +498,9 @@ export default function LandingPage() {
       </section>
 
       {/* Trust Badges */}
-      <section className="relative py-8">
+      <section className="relative py-8 bg-gray-50 dark:bg-transparent">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-[#12122a] border border-white/10 rounded-2xl p-6">
+          <div className="bg-white dark:bg-[#12122a] border border-gray-200 dark:border-white/10 rounded-2xl p-6 shadow-sm dark:shadow-none">
             <div className="flex flex-wrap justify-center gap-6 sm:gap-10">
               {[
                 { icon: Shield, label: 'Verified Workers' },
@@ -512,7 +512,7 @@ export default function LandingPage() {
                   <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
                     <item.icon className="w-4 h-4 text-white" />
                   </div>
-                  <span className="text-white font-medium">{item.label}</span>
+                  <span className="text-gray-700 dark:text-white font-medium">{item.label}</span>
                 </div>
               ))}
             </div>
@@ -562,15 +562,15 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative py-8 border-t border-white/10">
+      <footer className="relative py-8 border-t border-gray-200 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex items-center justify-center space-x-3 mb-3">
             <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
               <Wrench className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-white">SkillConnect</span>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">SkillConnect</span>
           </div>
-          <p className="text-gray-500 text-sm mb-4">
+          <p className="text-gray-500 dark:text-gray-500 text-sm mb-4">
             AI-Powered Workforce Empowerment Platform
           </p>
           <div className="flex items-center justify-center gap-6 text-sm text-gray-400">
