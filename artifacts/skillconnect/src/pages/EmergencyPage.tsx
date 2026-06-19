@@ -41,11 +41,11 @@ export default function EmergencyPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedType) return;
+    if (!selectedType || !user) return;
 
     setSubmitting(true);
     const { error } = await supabase.from('emergency_bookings').insert({
-      customer_id: user!.id,
+      customer_id: user.id,
       emergency_type: selectedType,
       location,
       description,

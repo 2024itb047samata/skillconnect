@@ -46,12 +46,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: null, role: profileData?.role ?? null };
   };
   const signUp = async (email: string, password: string, fullName: string, role: 'customer' | 'worker', phone?: string, location?: string) => {
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name: fullName, role, phone: phone || null, location: location || null } },
+    });
     if (error) return { error: error as Error };
     if (data.user) {
-      const { error: profileError } = await supabase.from('profiles').insert({ id: data.user.id, email, full_name: fullName, role, phone, location });
+      // Profile may already exist from the on_auth_user_created DB trigger; upsert is safe
+      const { error: profileError } = await supabase.from('profiles').upsert(
+        { id: data.user.id, email, full_name: fullName, role, phone: phone || null, location: location || null },
+        { onConflict: 'id' }
+      );
       if (profileError) return { error: profileError as Error };
-      if (role === 'worker') { const { error: workerError } = await supabase.from('worker_details').insert({ user_id: data.user.id, skills: [] }); if (workerError) return { error: workerError as Error }; }
+      if (role === 'worker') {
+        // worker_details may already exist from the trg_create_worker_details DB trigger; upsert is safe
+        await supabase.from('worker_details').upsert({ user_id: data.user.id, skills: [] }, { onConflict: 'user_id' });
+      }
     }
     return { error: null };
   };
