@@ -52,7 +52,7 @@ export default function ChatPage() {
 
   const fetchConversations = async () => {
     if (!user) return;
-    const { data } = await supabase.from('messages').or(`sender_id.eq.${user!.id},receiver_id.eq.${user!.id}`).select('*, sender:profiles!messages_sender_id_fkey(*), receiver:profiles!messages_receiver_id_fkey(*)').order('created_at', { ascending: false });
+    const { data } = await supabase.from('messages').select('*, sender:profiles!messages_sender_id_fkey(*), receiver:profiles!messages_receiver_id_fkey(*)').or(`sender_id.eq.${user!.id},receiver_id.eq.${user!.id}`).order('created_at', { ascending: false });
     if (data) {
       const convMap = new Map<string, { participant: Profile; unread: number }>();
       for (const msg of data as Message[]) {
@@ -71,7 +71,7 @@ export default function ChatPage() {
   };
 
   const fetchMessages = async (pid: string) => {
-    const { data } = await supabase.from('messages').or(`and(sender_id.eq.${user!.id},receiver_id.eq.${pid}),and(sender_id.eq.${pid},receiver_id.eq.${user!.id})`).select('*, sender:profiles!messages_sender_id_fkey(*)').order('created_at', { ascending: true });
+    const { data } = await supabase.from('messages').select('*, sender:profiles!messages_sender_id_fkey(*)').or(`and(sender_id.eq.${user!.id},receiver_id.eq.${pid}),and(sender_id.eq.${pid},receiver_id.eq.${user!.id})`).order('created_at', { ascending: true });
     if (data) setMessages(data as Message[]);
   };
 
