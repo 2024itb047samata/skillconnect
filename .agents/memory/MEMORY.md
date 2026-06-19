@@ -1,1 +1,1 @@
-- [SkillConnect DB setup](skillconnect-db.md) — DB tables created via SETUP.sql run once in Supabase SQL Editor; seed password is SkillPass123
+- [SkillConnect DB setup](skillconnect-db.md) — DB tables created via SETUP.sql run once in Supabase SQL Editor; seed credentials documented in SETUP.sql comments
