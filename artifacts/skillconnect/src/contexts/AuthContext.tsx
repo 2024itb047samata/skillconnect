@@ -45,12 +45,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (profileData) setProfile((prev) => prev ?? (profileData as any));
     return { error: null, role: profileData?.role ?? null };
   };
-  const signUp = async (email: string, password: string, fullName: string, role: 'customer' | 'worker', phone?: string, location?: string) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { full_name: fullName, role, phone: phone || null, location: location || null } },
-    });
+  const signUp = async (
+  email: string,
+  password: string,
+  fullName: string,
+  role: 'customer' | 'worker',
+  phone?: string,
+  location?: string
+) => {
+
+  console.log("ROLE RECEIVED IN AUTH:", role);
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+        role,
+        phone: phone || null,
+        location: location || null
+      }
+    }
+  });
     if (error) return { error: error as Error };
     if (data.user) {
       // Profile may already exist from the on_auth_user_created DB trigger; upsert is safe
