@@ -15,12 +15,43 @@ export default function ChatPage() {
   const [newMessage, setNewMessage] = useState('');
   const [loading, setLoading] = useState(true);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const activeChatRef = useRef<Profile | null>(null);
 
+  useEffect(() => { activeChatRef.current = activeChat; }, [activeChat]);
   useEffect(() => { if (user) fetchConversations(); }, [user]);
   useEffect(() => { if (chatWithId) openChat(chatWithId); else if (conversations.length > 0 && !activeChat) openChat(conversations[0].id); }, [chatWithId, conversations]);
   useEffect(() => { messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages]);
 
+  // Realtime subscription for incoming messages
+  useEffect(() => {
+    if (!user) return;
+    const channel = supabase
+      .channel(`messages:${user.id}`)
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'messages',
+        filter: `receiver_id=eq.${user.id}`,
+      }, async (payload) => {
+        const newMsg = payload.new as Message;
+        // Fetch sender profile to attach
+        const { data: senderData } = await supabase.from('profiles').select('*').eq('id', newMsg.sender_id).single();
+        const enriched = { ...newMsg, sender: senderData } as Message;
+
+        // If the message is from the active chat partner, add it to view
+        if (activeChatRef.current?.id === newMsg.sender_id) {
+          setMessages((prev) => [...prev, enriched]);
+        }
+        // Refresh conversation list for unread badge
+        fetchConversations();
+      })
+      .subscribe();
+
+    return () => { supabase.removeChannel(channel); };
+  }, [user]);
+
   const fetchConversations = async () => {
+    if (!user) return;
     const { data } = await supabase.from('messages').or(`sender_id.eq.${user!.id},receiver_id.eq.${user!.id}`).select('*, sender:profiles!messages_sender_id_fkey(*), receiver:profiles!messages_receiver_id_fkey(*)').order('created_at', { ascending: false });
     if (data) {
       const convMap = new Map<string, { participant: Profile; unread: number }>();
@@ -46,8 +77,10 @@ export default function ChatPage() {
 
   const sendMessage = async () => {
     if (!newMessage.trim() || !activeChat) return;
-    const { data } = await supabase.from('messages').insert({ sender_id: user!.id, receiver_id: activeChat.id, content: newMessage.trim() }).select('*, sender:profiles!messages_sender_id_fkey(*)').single();
-    if (data) { setMessages([...messages, data as Message]); setNewMessage(''); }
+    const trimmed = newMessage.trim();
+    setNewMessage('');
+    const { data } = await supabase.from('messages').insert({ sender_id: user!.id, receiver_id: activeChat.id, content: trimmed }).select('*, sender:profiles!messages_sender_id_fkey(*)').single();
+    if (data) { setMessages((prev) => [...prev, data as Message]); }
   };
 
   return (

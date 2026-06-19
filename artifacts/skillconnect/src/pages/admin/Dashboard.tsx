@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '../../lib/supabase';
 import type { Profile, WorkerDetails } from '../../types/database';
-import { Users, UserCog, Briefcase, Calendar, Star, Shield, CheckCircle, TrendingUp, Zap } from 'lucide-react';
+import { Users, UserCog, Briefcase, Calendar, Star, Shield, CheckCircle, TrendingUp, Zap, Database, Copy } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const containerVariants = {
@@ -121,6 +121,47 @@ export default function AdminDashboard() {
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <>
+            {/* DB Setup Banner — shown when no users exist yet */}
+            {!loading && stats.totalUsers === 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="glass-card p-6 mb-8 border-amber-500/30"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <Database className="w-6 h-6 text-amber-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-white mb-1">Database Setup Required</h3>
+                    <p className="text-surface-400 text-sm mb-4">
+                      No tables found. Run the setup SQL once in your{' '}
+                      <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:underline">
+                        Supabase SQL Editor
+                      </a>{' '}
+                      to create all tables, RLS policies, and seed 10 demo workers.
+                    </p>
+                    <div className="bg-surface-900 rounded-xl p-4 border border-surface-700">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-xs text-surface-500 font-mono">File path</span>
+                        <button
+                          onClick={() => navigator.clipboard.writeText('artifacts/skillconnect/SETUP.sql')}
+                          className="flex items-center gap-1 text-xs text-primary-400 hover:text-primary-300 transition-colors"
+                        >
+                          <Copy className="w-3 h-3" />
+                          Copy path
+                        </button>
+                      </div>
+                      <code className="text-sm text-amber-300 font-mono">artifacts/skillconnect/SETUP.sql</code>
+                    </div>
+                    <p className="text-xs text-surface-500 mt-3">
+                      Seed account password: <span className="font-mono text-surface-300">SkillPass123</span>
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
             <motion.div
               variants={containerVariants}
               initial="hidden"

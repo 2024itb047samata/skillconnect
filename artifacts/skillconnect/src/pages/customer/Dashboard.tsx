@@ -26,7 +26,7 @@ export default function CustomerDashboard() {
   useEffect(() => { if (user) fetchWorkers(); }, [user]);
 
   const fetchWorkers = async () => {
-    const { data } = await supabase.from('worker_details').select('*, profile:profiles!worker_details_user_id_fkey(*)').eq('availability_status', 'available').gt('rating', 0).order('rating', { ascending: false }).limit(6);
+    const { data } = await supabase.from('worker_details').select('*, profile:profiles!worker_details_user_id_fkey(*)').order('rating', { ascending: false }).limit(6);
     if (data) setWorkers(data as WorkerDetails[]);
     setLoading(false);
   };

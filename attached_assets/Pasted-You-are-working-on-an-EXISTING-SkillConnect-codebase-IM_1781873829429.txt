@@ -1,0 +1,184 @@
+You are working on an EXISTING SkillConnect codebase.
+
+IMPORTANT RULES:
+- Do NOT redesign the UI.
+- Do NOT replace pages.
+- Do NOT create a new project.
+- Do NOT generate a different frontend.
+- Continue from the current codebase only.
+
+GOAL:
+Transform the existing SkillConnect application into a fully functional production-ready MVP.
+
+FIRST:
+Audit the entire codebase and create a report showing:
+
+1. Existing completed features
+2. Partially completed features
+3. Broken features
+4. Missing database tables
+5. Missing Supabase policies
+6. Missing indexes
+7. Missing relationships
+8. Runtime errors
+9. Authentication issues
+
+Then fix everything.
+
+=================================
+DATABASE
+=================================
+
+Create and configure:
+
+- profiles
+- worker_details
+- jobs
+- bookings
+- reviews
+- messages
+
+Add:
+- foreign keys
+- indexes
+- timestamps
+- row level security
+
+Generate and execute SQL migrations.
+
+=================================
+AUTHENTICATION
+=================================
+
+Verify:
+
+- Signup works
+- Login works
+- Logout works
+- Session persistence works
+- Role based routing works
+
+Roles:
+- customer
+- worker
+- admin
+
+=================================
+WORKER FEATURES
+=================================
+
+Make fully functional:
+
+- Worker registration
+- Worker profile editing
+- Skills management
+- Availability status
+- Hourly/Daily pricing
+- Worker search
+- Worker filtering
+- Worker profile page
+- Ratings
+- Reviews
+
+=================================
+CUSTOMER FEATURES
+=================================
+
+Make fully functional:
+
+- Search workers
+- View worker profile
+- Book worker
+- Post jobs
+- View job history
+- View booking history
+- Leave reviews
+- Save favourite workers
+
+=================================
+CHAT SYSTEM
+=================================
+
+Complete the existing chat:
+
+- Send messages
+- Receive messages
+- Conversation list
+- Unread indicators
+- Realtime updates using Supabase
+
+=================================
+ADMIN FEATURES
+=================================
+
+Complete admin dashboard:
+
+- Verify workers
+- View users
+- View workers
+- View bookings
+- View jobs
+- View analytics
+
+=================================
+SEARCH
+=================================
+
+Fix worker search showing zero workers.
+
+Ensure:
+- seeded workers appear
+- search works
+- filtering works
+
+=================================
+SEED DATA
+=================================
+
+Create:
+
+10 workers
+- plumber
+- electrician
+- painter
+- mason
+- carpenter
+- mechanic
+- cleaner
+- AC technician
+
+with:
+- ratings
+- reviews
+- locations
+- pricing
+
+Create:
+- sample customers
+- sample jobs
+- sample bookings
+
+=================================
+TESTING
+=================================
+
+After implementation:
+
+Test:
+- Signup
+- Login
+- Worker Search
+- Worker Profile
+- Post Job
+- Book Worker
+- Reviews
+- Chat
+
+Create a FINAL REPORT:
+
+- Files changed
+- Tables created
+- Policies created
+- Remaining issues
+
+Do not stop until every feature is working.

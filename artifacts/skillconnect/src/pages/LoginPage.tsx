@@ -19,9 +19,9 @@ export default function LoginPage() {
     e.preventDefault();
     setError('');
     setLoading(true);
-    const { error } = await signIn(email, password);
+    const { error, role } = await signIn(email, password);
     if (error) { setError('Invalid email or password'); setLoading(false); return; }
-    setTimeout(() => navigate(`/${profile?.role || 'customer'}/dashboard`), 500);
+    navigate(`/${role || 'customer'}/dashboard`);
   };
 
   return (

@@ -3,7 +3,7 @@ import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 import type { Profile, WorkerDetails } from '../types/database';
 
-interface AuthContextType { user: User | null; profile: Profile | null; workerDetails: WorkerDetails | null; session: Session | null; loading: boolean; signIn: (email: string, password: string) => Promise<{ error: Error | null }>; signUp: (email: string, password: string, fullName: string, role: 'customer' | 'worker', phone?: string, location?: string) => Promise<{ error: Error | null }>; signOut: () => Promise<void>; refreshProfile: () => Promise<void>; }
+interface AuthContextType { user: User | null; profile: Profile | null; workerDetails: WorkerDetails | null; session: Session | null; loading: boolean; signIn: (email: string, password: string) => Promise<{ error: Error | null; role: string | null }>; signUp: (email: string, password: string, fullName: string, role: 'customer' | 'worker', phone?: string, location?: string) => Promise<{ error: Error | null }>; signOut: () => Promise<void>; refreshProfile: () => Promise<void>; }
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -37,7 +37,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (e) { console.error('Profile fetch error:', e); }
   };
 
-  const signIn = async (email: string, password: string) => { const { error } = await supabase.auth.signInWithPassword({ email, password }); return { error: error as Error | null }; };
+  const signIn = async (email: string, password: string): Promise<{ error: Error | null; role: string | null }> => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error || !data.user) return { error: error as Error | null, role: null };
+    // Eagerly fetch profile so caller gets the role immediately
+    const { data: profileData } = await supabase.from('profiles').select('role').eq('id', data.user.id).single();
+    if (profileData) setProfile((prev) => prev ?? (profileData as any));
+    return { error: null, role: profileData?.role ?? null };
+  };
   const signUp = async (email: string, password: string, fullName: string, role: 'customer' | 'worker', phone?: string, location?: string) => {
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) return { error: error as Error };
