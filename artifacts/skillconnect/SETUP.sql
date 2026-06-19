@@ -2,7 +2,14 @@
 -- SkillConnect — Complete Database Setup + Seed Data
 -- Run this ONCE in your Supabase SQL Editor (supabase.com/dashboard → SQL Editor)
 -- All existing tables/policies will be replaced cleanly.
--- Seed password for all demo accounts: SkillPass123
+--
+-- ⚠️  DEMO ENVIRONMENT ONLY ⚠️
+-- The seed block below creates demo accounts with a shared password
+-- ("SkillPass123") for local development and testing purposes ONLY.
+-- BEFORE any public or production deployment you MUST:
+--   1. Delete or disable all seeded auth.users rows
+--   2. Change or remove the seed block entirely
+--   3. Create real admin accounts with strong, unique passwords
 -- ============================================================
 
 -- ============================================================

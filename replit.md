@@ -16,7 +16,7 @@ A digital labour marketplace connecting customers with verified skilled tradespe
 2. Paste and run `artifacts/skillconnect/SETUP.sql`
 3. This creates all tables, RLS policies, indexes, triggers, and seeds 14 demo accounts
 
-**Seed account password:** `SkillPass123`
+**Seed account password:** `SkillPass123` *(demo/development only — remove seed accounts before any public deployment)*
 
 | Email | Role |
 |---|---|
