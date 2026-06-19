@@ -1,0 +1,289 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode - Bright, clean, productivity-focused */
+    --color-bg: 255 255 255;
+    --color-surface: 249 250 251;
+    --color-surface-elevated: 255 255 255;
+    --color-text: 17 24 39;
+    --color-text-secondary: 55 65 81;
+    --color-text-muted: 107 114 128;
+    --color-border: 229 231 235;
+    --color-border-subtle: 243 244 246;
+    --color-card-bg: 255 255 255;
+    --color-card-border: 229 231 235;
+    --color-input-bg: 249 250 251;
+    --color-input-border: 209 213 219;
+    --gradient-primary: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-card-hover: 0 10px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+    --shadow-glow: 0 0 20px rgba(168, 85, 247, 0.15);
+  }
+
+  .dark {
+    /* Dark Mode - Premium, modern, immersive */
+    --color-bg: 10 10 20;
+    --color-surface: 18 18 42;
+    --color-surface-elevated: 24 24 58;
+    --color-text: 243 244 246;
+    --color-text-secondary: 209 213 219;
+    --color-text-muted: 156 163 175;
+    --color-border: 55 65 85;
+    --color-border-subtle: 30 41 59;
+    --color-card-bg: 18 18 42;
+    --color-card-border: 255 255 255;
+    --color-card-border-opacity: 0.1;
+    --color-input-bg: 10 10 20;
+    --color-input-border: 255 255 255;
+    --color-input-border-opacity: 0.1;
+    --gradient-primary: linear-gradient(135deg, #a855f7 0%, #d946ef 100%);
+    --shadow-card: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
+    --shadow-card-hover: 0 20px 50px -15px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 40px rgba(168, 85, 247, 0.3);
+  }
+
+  body {
+    @apply bg-white dark:bg-[#0a0a14] text-gray-900 dark:text-gray-100 transition-colors duration-300;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Hide Bolt badge - multiple selectors */
+  [data-bolt-badge],
+  [class*="bolt-badge"],
+  [class*="made-in-bolt"],
+  .bolt-badge,
+  .bolt-watermark,
+  [data-made-with-bolt],
+  a[href*="bolt"][class*="badge"],
+  a[href*="bolt"][class*="watermark"],
+  div[class*="bolt"][class*="badge"],
+  div[class*="bolt"][class*="watermark"],
+  button[class*="bolt"][class*="badge"],
+  .fixed.bottom-0.right-0[class*="bolt"],
+  [class*="powered-by-bolt"],
+  [class*="built-with-bolt"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+@layer components {
+  /* Glass effect - dark mode only */
+  .glass {
+    @apply dark:bg-white/10 dark:border dark:border-white/20;
+  }
+
+  /* Card styles - distinct for each theme */
+  .glass-card {
+    @apply bg-white dark:bg-[#12122a]
+           border border-gray-200 dark:border-white/10
+           rounded-2xl
+           shadow-[0_1px_3px_rgba(0,0,0,0.1)] dark:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)]
+           transition-all duration-300;
+  }
+
+  .glass-button {
+    @apply bg-gray-100 dark:bg-white/10
+           border border-gray-200 dark:border-white/20
+           hover:bg-gray-200 dark:hover:bg-white/20
+           transition-all duration-300
+           text-gray-700 dark:text-white;
+  }
+
+  /* Premium button - purple gradient, works in both themes */
+  .premium-button {
+    @apply relative overflow-hidden
+           bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600
+           bg-[length:200%_100%] animate-gradient-shift
+           text-white font-semibold rounded-xl
+           hover:scale-[1.02]
+           active:scale-[0.98]
+           transition-all duration-300
+           shadow-lg dark:shadow-glow;
+  }
+
+  /* Text gradient - purple */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-500 via-accent-500 to-primary-500
+           bg-[length:200%_auto] bg-clip-text text-transparent animate-gradient-shift;
+  }
+
+  .text-gradient-trust {
+    @apply bg-gradient-to-r from-trust-500 to-primary-500
+           bg-clip-text text-transparent;
+  }
+
+  /* Card hover effect */
+  .card-hover {
+    @apply transition-all duration-500
+           hover:shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] dark:hover:shadow-card-hover
+           hover:-translate-y-1;
+  }
+
+  /* Input styles - light/dark aware */
+  .input-premium {
+    @apply w-full px-4 py-3
+           bg-gray-100 dark:bg-[#0a0a14]
+           border border-gray-300 dark:border-white/10
+           rounded-xl
+           focus:ring-2 focus:ring-primary-500
+           focus:border-primary-500
+           outline-none
+           transition-all duration-300
+           placeholder:text-gray-400 dark:placeholder:text-gray-600
+           text-gray-900 dark:text-white;
+  }
+
+  /* Badge styles - theme aware */
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium
+           border dark:border-white/10;
+  }
+
+  .badge-primary {
+    @apply bg-primary-100 dark:bg-primary-500/20
+           text-primary-700 dark:text-primary-300
+           border-primary-200 dark:border-primary-500/30;
+  }
+
+  .badge-accent {
+    @apply bg-accent-100 dark:bg-accent-500/20
+           text-accent-700 dark:text-accent-300
+           border-accent-200 dark:border-accent-500/30;
+  }
+
+  .badge-trust {
+    @apply bg-trust-100 dark:bg-trust-500/20
+           text-trust-700 dark:text-trust-300
+           border-trust-200 dark:border-trust-500/30;
+  }
+
+  .badge-success {
+    @apply bg-emerald-100 dark:bg-emerald-500/20
+           text-emerald-700 dark:text-emerald-300
+           border-emerald-200 dark:border-emerald-500/30;
+  }
+
+  .badge-warning {
+    @apply bg-amber-100 dark:bg-amber-500/20
+           text-amber-700 dark:text-amber-300
+           border-amber-200 dark:border-amber-500/30;
+  }
+
+  .badge-danger {
+    @apply bg-rose-100 dark:bg-rose-500/20
+           text-rose-700 dark:text-rose-300
+           border-rose-200 dark:border-rose-500/30;
+  }
+
+  .skilltrust-ring {
+    @apply ring-4 ring-trust-500/30;
+  }
+
+  /* SkillTrust Score Circle */
+  .score-circle {
+    @apply relative w-20 h-20;
+  }
+
+  .score-circle-bg {
+    @apply absolute inset-0 rounded-full
+           border-4 border-gray-200 dark:border-white/10;
+  }
+
+  .score-circle-progress {
+    @apply absolute inset-0 rounded-full;
+    background: conic-gradient(from 0deg, #10b981 0deg, #a855f7 180deg, transparent 180deg);
+  }
+
+  /* Emergency pulse */
+  .emergency-pulse {
+    animation: emergency-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes emergency-pulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 20px rgba(239, 68, 68, 0);
+    }
+  }
+
+  /* Online indicator */
+  .online-indicator {
+    @apply relative;
+  }
+
+  .online-indicator::after {
+    content: '';
+    @apply absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 rounded-full
+           border-2 border-white dark:border-[#12122a];
+  }
+
+  .online-indicator.busy::after {
+    @apply bg-amber-500;
+  }
+
+  .online-indicator.offline::after {
+    @apply bg-gray-500;
+  }
+
+  /* Skeleton loader - theme aware */
+  .skeleton {
+    @apply bg-gray-200 dark:bg-white/5 animate-pulse rounded;
+  }
+
+  /* Navbar theme styles */
+  .nav-bg {
+    @apply bg-white/95 dark:bg-[#0a0a14]/95
+           border-b border-gray-200 dark:border-white/10;
+  }
+
+  /* Section background */
+  .section-bg {
+    @apply bg-gray-50 dark:bg-[#0a0a14];
+  }
+
+  /* Elevated surface */
+  .surface-elevated {
+    @apply bg-white dark:bg-[#12122a]
+           border border-gray-200 dark:border-white/10;
+  }
+
+  /* Gradient backgrounds for hero sections */
+  .hero-bg-light {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+  }
+
+  .hero-bg-dark {
+    background: linear-gradient(135deg, #0a0a14 0%, #12122a 50%, #0a0a14 100%);
+  }
+
+  /* Primary gradient background */
+  .primary-gradient-bg {
+    @apply bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
