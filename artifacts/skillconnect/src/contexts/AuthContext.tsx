@@ -54,8 +54,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   location?: string
 ) => {
 
-  console.log("ROLE RECEIVED IN AUTH:", role);
-
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
