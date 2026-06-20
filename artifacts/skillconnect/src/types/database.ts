@@ -55,6 +55,7 @@ export interface Job {
   created_at: string;
   updated_at: string;
   customer?: Profile;
+  applications?: JobApplication[];
 }
 
 export type BookingStatus = 'pending' | 'accepted' | 'in_progress' | 'completed' | 'rejected' | 'cancelled';
@@ -99,6 +100,18 @@ export interface Message {
   receiver?: Profile;
 }
 
+export interface JobApplication {
+  id: string;
+  job_id: string;
+  worker_id: string;
+  status: 'pending' | 'accepted' | 'rejected';
+  cover_note?: string;
+  created_at: string;
+  worker?: Profile;
+  worker_details?: WorkerDetails;
+  job?: Job;
+}
+
 export interface PortfolioItem {
   id: string;
   worker_id: string;
@@ -127,18 +140,6 @@ export interface SOSReport {
   resolved_at?: string;
 }
 
-export interface AttendanceRecord {
-  id: string;
-  worker_id: string;
-  booking_id?: string;
-  site_location?: string;
-  check_in_time?: string;
-  check_out_time?: string;
-  status: 'present' | 'absent' | 'late' | 'early_leave';
-  notes?: string;
-  created_at: string;
-}
-
 export interface EmergencyBooking {
   id: string;
   customer_id: string;
@@ -161,25 +162,5 @@ export interface ContractorTeam {
   role: string;
   daily_wage?: number;
   is_active: boolean;
-  created_at: string;
-}
-
-export interface SkillModule {
-  id: string;
-  title: string;
-  description?: string;
-  category?: string;
-  difficulty_level: 'beginner' | 'intermediate' | 'advanced';
-  duration_hours: number;
-  created_at: string;
-}
-
-export interface WorkerSkillProgress {
-  id: string;
-  worker_id: string;
-  module_id: string;
-  progress_percent: number;
-  completed: boolean;
-  completed_at?: string;
   created_at: string;
 }

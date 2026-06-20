@@ -1,1 +1,3 @@
-- [SkillConnect DB setup](skillconnect-db.md) — DB tables created via SETUP.sql run once in Supabase SQL Editor; seed credentials documented in SETUP.sql comments
+- [job_applications flow](job-applications-flow.md) — accept triggers booking insert + job status→in_progress + reject others; all in one transaction-like Promise.all
+- [SETUP.sql seed pattern](setup-sql-seed.md) — auth.users uses ON CONFLICT DO NOTHING (UUIDs fixed); profiles uses ON CONFLICT DO UPDATE so re-running updates names/locations safely
+- [Indian skills list](indian-skills.md) — canonical 12 skills with Lucide icon mapping used across PostJobPage, SearchWorkersPage, Dashboards

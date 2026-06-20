@@ -10,8 +10,10 @@ import ChatPage from './pages/ChatPage';
 import CustomerDashboard from './pages/customer/Dashboard';
 import PostJobPage from './pages/customer/PostJobPage';
 import CustomerBookingsPage from './pages/customer/BookingsPage';
+import MyJobsPage from './pages/customer/MyJobsPage';
 import WorkerDashboard from './pages/worker/Dashboard';
 import WorkerProfileEdit from './pages/worker/ProfileEdit';
+import FindJobsPage from './pages/worker/FindJobsPage';
 import AdminDashboard from './pages/admin/Dashboard';
 import SOSPage from './pages/worker/SOSPage';
 import EmergencyPage from './pages/EmergencyPage';
@@ -47,12 +49,14 @@ function App() {
           <Route path="/customer/dashboard" element={<ProtectedRoute allowedRoles={['customer', 'admin']}><CustomerDashboard /></ProtectedRoute>} />
           <Route path="/customer/post-job" element={<ProtectedRoute allowedRoles={['customer', 'admin']}><PostJobPage /></ProtectedRoute>} />
           <Route path="/customer/bookings" element={<ProtectedRoute allowedRoles={['customer', 'admin']}><CustomerBookingsPage /></ProtectedRoute>} />
-          <Route path="/customer/jobs" element={<ProtectedRoute allowedRoles={['customer', 'admin']}><CustomerDashboard /></ProtectedRoute>} />
+          <Route path="/customer/jobs" element={<ProtectedRoute allowedRoles={['customer', 'admin']}><MyJobsPage /></ProtectedRoute>} />
+          <Route path="/customer/my-jobs" element={<ProtectedRoute allowedRoles={['customer', 'admin']}><MyJobsPage /></ProtectedRoute>} />
           <Route path="/customer/profile" element={<ProtectedRoute allowedRoles={['customer', 'admin']}><CustomerDashboard /></ProtectedRoute>} />
           <Route path="/worker/dashboard" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><WorkerDashboard /></ProtectedRoute>} />
           <Route path="/worker/profile" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><WorkerProfileEdit /></ProtectedRoute>} />
           <Route path="/worker/bookings" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><CustomerBookingsPage /></ProtectedRoute>} />
-          <Route path="/worker/jobs" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><WorkerDashboard /></ProtectedRoute>} />
+          <Route path="/worker/find-jobs" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><FindJobsPage /></ProtectedRoute>} />
+          <Route path="/worker/jobs" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><FindJobsPage /></ProtectedRoute>} />
           <Route path="/worker/reviews" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><WorkerDashboard /></ProtectedRoute>} />
           <Route path="/worker/sos" element={<ProtectedRoute allowedRoles={['worker', 'admin']}><SOSPage /></ProtectedRoute>} />
           <Route path="/contractor/dashboard" element={<ProtectedRoute allowedRoles={['contractor', 'admin']}><ContractorDashboard /></ProtectedRoute>} />

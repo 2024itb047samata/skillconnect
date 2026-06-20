@@ -1,0 +1,294 @@
+You are working on my existing SkillConnect website. DO NOT redesign the website. Keep the current purple-white theme, existing layouts, components, authentication flow, database structure, and navigation intact. Only implement the following improvements and fix all related bugs.
+
+## 1. Replace USA Workers with Indian Workers
+
+Currently all worker profiles use US names and locations.
+
+Update the worker seed data/database with realistic Indian workers.
+
+Requirements:
+
+* Indian names
+* Indian phone numbers
+* Indian cities
+* Indian profile photos
+* Indian hourly rates in INR
+
+Example locations:
+
+* Kolkata
+* Howrah
+* Chennai
+* Bengaluru
+* Mumbai
+* Delhi
+* Hyderabad
+* Pune
+
+Example professions:
+
+* Electrician
+* Plumber
+* Carpenter
+* Painter
+* Housekeeper
+* AC Technician
+* CCTV Technician
+* Driver
+* Delivery Worker
+* Caretaker
+
+Generate at least 50 realistic worker profiles.
+
+---
+
+## 2. Fix Worker Search Functionality
+
+Current issue:
+Searching "electrician" returns 0 results.
+
+Implement proper search.
+
+Search should work on:
+
+* Profession/Skill (Highest Priority)
+* Worker Category
+* Worker Name
+* City
+
+Examples:
+Searching:
+"electrician"
+"plumber"
+"carpenter"
+"kolkata"
+"rahul"
+
+should return matching workers.
+
+Search must be:
+
+* Case insensitive
+* Instant filtering
+* Partial matching
+
+Examples:
+"electri" → Electrician
+"plumb" → Plumber
+
+Show message:
+"No workers found matching your search"
+
+when results are empty.
+
+---
+
+## 3. Change Currency from Dollar to Indian Rupees
+
+Replace all occurrences of:
+$
+USD
+
+with
+
+₹
+INR
+
+Examples:
+$25/hr → ₹500/hr
+$50/hr → ₹1000/hr
+
+Update:
+
+* Worker rates
+* Job budgets
+* Dashboard statistics
+* Cards
+* Profile pages
+* Job postings
+
+Use Indian pricing ranges.
+
+---
+
+## 4. Improve Search Placeholder
+
+Current:
+Search by worker name
+
+Change to:
+
+"Search electricians, plumbers, carpenters..."
+
+The search should encourage profession-based searching rather than name-based searching.
+
+---
+
+## 5. Implement Worker Job Portal
+
+Currently only customers can find workers.
+
+Create a complete worker-side "Find Jobs" feature.
+
+Add navigation item:
+
+Find Jobs
+
+Visible only when logged in as Worker.
+
+---
+
+## 6. Job Marketplace
+
+Create a job listing page where workers can browse jobs.
+
+Display:
+
+* Job Title
+* Category
+* Budget
+* Location
+* Posted Time
+* Description
+* Client Name
+
+Examples:
+
+Need Electrician for House Wiring
+Budget: ₹2500
+Location: Kolkata
+
+Need AC Repair Technician
+Budget: ₹1500
+Location: Chennai
+
+Need House Cleaning
+Budget: ₹800
+Location: Bengaluru
+
+---
+
+## 7. Worker Job Search
+
+Workers should be able to search jobs by:
+
+* Skill
+* Category
+* Location
+
+Examples:
+Electrician
+Plumber
+Kolkata
+Chennai
+
+---
+
+## 8. Apply For Jobs
+
+Workers can click:
+
+Apply Now
+
+Application should save:
+
+* Worker ID
+* Worker Name
+* Job ID
+* Timestamp
+
+Store applications in database.
+
+---
+
+## 9. Client Application Management
+
+Clients should see:
+
+My Posted Jobs
+
+For each job:
+
+* Total Applicants
+* Applicant List
+* Worker Rating
+* Experience
+* Contact Option
+
+Client can:
+
+* Accept Worker
+* Reject Worker
+
+Update job status accordingly.
+
+---
+
+## 10. Dashboard Statistics
+
+Add real-time counters:
+
+Workers Available
+Jobs Posted
+Jobs Completed
+Applications Submitted
+
+---
+
+## 11. Notifications
+
+Add notifications for:
+
+Worker:
+
+* Application Accepted
+* Application Rejected
+* New Matching Jobs
+
+Client:
+
+* New Applicant
+* Job Completed
+
+---
+
+## 12. Role-Based Features
+
+Customer:
+✔ Find Workers
+✔ Post Jobs
+✔ Manage Applications
+
+Worker:
+✔ Create Profile
+✔ Find Jobs
+✔ Apply Jobs
+✔ Track Applications
+
+Ensure permissions are properly enforced.
+
+---
+
+## 13. Bug Fixes
+
+Fix any existing issues related to:
+
+* Worker list not loading
+* Search returning empty results
+* Job posting errors
+* Authentication role switching
+* Dashboard data not updating
+
+---
+
+## 14. Expected Result
+
+SkillConnect should become a two-sided marketplace:
+
+Customers:
+Find Workers + Post Jobs
+
+Workers:
+Find Jobs + Apply Jobs
+
+The platform should feel like an Indian urban-services marketplace similar to Urban Company, but focused on local skilled workers and contractors.
